@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         initComponents()
     }
 
+    //this is a comment
     private fun initComponents() {
         edNickname = findViewById<EditText>(R.id.nickname_edit)
         tvNickname = findViewById<TextView>(R.id.nickname_text)

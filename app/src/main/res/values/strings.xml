@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AboutMe</string>
+    <string name="text_name">Minh</string>
+    <string name="yellow_star">yellow star</string>
+    <string name="bio">Hi, my name is Minh
+    \nI admire Socrates for the way he finds the truth through "Socratic" questions.
+    \nLife is a mystery, not a gift. We are to find our meaning by being a detective, not a mere receiver.
+    \n\nI like the beautiful of universe. Numbers. Lines. Motions. Abstractions.
+    \nI prefer understanding how a machine work to making a friend, therefore I am not very sociable.
+    \nI like to be alone doing interesting (miscellaneous) things. Competing with myself is always more
+        interesting than competing with others.
+    \n\nI like philosophy, but I am not a sophist (which means "wise man" and none about "lying").
+    \n\nI am lucky to have a blessed life, mom, dad, a little sister, a fine body and a
+    working mind. A peaceful life. A culture that values learning. However, I am lucky or unlucky
+    to have wicked thoughts, a social shyness, an immutably primal fear and a perhaps-deadly curiosity.
+    \n\nLife passes. Sooner or later, I would die. About me, let my doings, my thought
+    talks for itself.\n\n\n</string>
+    <string name="socrates_silencio">socrates silencio</string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+</resources>

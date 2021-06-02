@@ -13,7 +13,12 @@ class MainActivity : AppCompatActivity() {
     private val myName: MyName = MyName("Minh")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Since we are using data binding, not just view binding
+        // if view binding, the following line should be
+        // binding = ActivityMainBinding.inflate(layoutInflater)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
         binding.myName = myName
         initComponents()
     }

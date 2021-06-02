@@ -10,11 +10,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val rollButton: Button = findViewById(R.id.button)
-        rollDice(findViewById(R.id.imageView))
-        rollDice(findViewById(R.id.imageView2))
+        val imageView1: ImageView = findViewById(R.id.imageView)
+        val imageView2: ImageView = findViewById(R.id.imageView2)
+        rollDice(imageView1)
+        rollDice(imageView2)
         rollButton.setOnClickListener {
-            rollDice(findViewById(R.id.imageView))
-            rollDice(findViewById(R.id.imageView2))
+            rollDice(imageView1)
+            rollDice(imageView2)
         }
     }
 

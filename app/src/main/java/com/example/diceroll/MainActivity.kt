@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun rollDice(diceImageView: ImageView) {
-        val roll_result = Dice(6).roll()
-        val drawableResult = when (roll_result) {
+        val rollResult = Dice(6).roll()
+        val drawableResult = when (rollResult) {
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
             3 -> R.drawable.dice_3
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.dice_6
         }
         diceImageView.setImageResource(drawableResult)
-        diceImageView.contentDescription = roll_result.toString()
+        diceImageView.contentDescription = rollResult.toString()
     }
 }
 

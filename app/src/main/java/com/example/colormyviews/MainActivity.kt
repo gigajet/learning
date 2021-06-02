@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setListeners()
     }
@@ -38,14 +38,14 @@ class MainActivity : AppCompatActivity() {
     private fun setListeners() {
         val rootConstraintLayout = findViewById<View>(R.id.constraint_layout)
         binding.apply {
-            val clickableViews: List<View?> =
+            val clickableViews: List<View> =
                 listOf(
                     boxOneText, boxTwoText, boxThreeText,
                     boxFourText, boxFiveText, rootConstraintLayout,
                     redButton, greenButton, yellowButton
                 )
             for (item in clickableViews) {
-                item?.setOnClickListener { makeColored(it) }
+                item.setOnClickListener { makeColored(it) }
             }
         }
     }

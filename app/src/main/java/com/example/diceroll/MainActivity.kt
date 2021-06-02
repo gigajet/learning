@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     fun rollDice(diceImageView: ImageView) {
         val roll_result = Dice(6).roll()
         val drawableResult = when (roll_result) {
-            2 -> R.drawable.dice_2
             1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
             3 -> R.drawable.dice_3
             4 -> R.drawable.dice_4
             5 -> R.drawable.dice_5

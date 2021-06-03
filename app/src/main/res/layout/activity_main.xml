@@ -29,22 +29,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184"
-        tools:srcCompat="@drawable/dice_1" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="160dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="135dp"
-        android:contentDescription="@string/dice_content_description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.41"
         tools:srcCompat="@drawable/dice_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

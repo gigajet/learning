@@ -2,26 +2,41 @@ package com.example.diceroll
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.ImageView
+import com.example.diceroll.databinding.ActivityMainBinding
+
+const val KEY_RESULT = "result_key"
 
 class MainActivity : AppCompatActivity() {
+    private var lastRollResult: Int = 1
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val rollButton: Button = findViewById(R.id.button)
-        val imageView1: ImageView = findViewById(R.id.imageView)
-        val imageView2: ImageView = findViewById(R.id.imageView2)
-        rollDice(imageView1)
-        rollDice(imageView2)
-        rollButton.setOnClickListener {
-            rollDice(imageView1)
-            rollDice(imageView2)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        lastRollResult = Dice(6).roll()
+        displayRollResult(binding.imageView, lastRollResult)
+        binding.button.setOnClickListener {
+            lastRollResult = Dice(6).roll()
+            displayRollResult(binding.imageView, lastRollResult)
         }
     }
 
-    fun rollDice(diceImageView: ImageView) {
-        val rollResult = Dice(6).roll()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_RESULT, lastRollResult)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        lastRollResult = savedInstanceState.getInt(KEY_RESULT, 1)
+        displayRollResult(binding.imageView, lastRollResult)
+    }
+
+    fun displayRollResult(diceImageView: ImageView, rollResult: Int) {
         val drawableResult = when (rollResult) {
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2

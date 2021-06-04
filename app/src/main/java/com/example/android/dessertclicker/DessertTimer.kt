@@ -50,7 +50,7 @@ class DessertTimer(lifeCycle: Lifecycle) : LifecycleObserver {
      * [Handler] is a class meant to process a queue of messages (known as [android.os.Message]s)
      * or actions (known as [Runnable]s)
      */
-    private var handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)

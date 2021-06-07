@@ -48,9 +48,9 @@ class SleepDatabaseTest {
         // Using an in-memory database because the information stored here disappears when the
         // process is killed.
         db = Room.inMemoryDatabaseBuilder(context, SleepDatabase::class.java)
-                // Allowing main thread queries, just for testing.
-                .allowMainThreadQueries()
-                .build()
+            // Allowing main thread queries, just for testing.
+            .allowMainThreadQueries()
+            .build()
         sleepDao = db.sleepDatabaseDao
     }
 
@@ -67,5 +67,36 @@ class SleepDatabaseTest {
         sleepDao.insert(night)
         val tonight = sleepDao.getTonight()
         assertEquals(tonight?.sleepQuality, -1)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun updateNight() {
+        val night = SleepNight()
+        sleepDao.insert(night)
+        val tonight = sleepDao.getTonight()
+        tonight!!.sleepQuality = 5
+        val currentTime = System.currentTimeMillis()
+        tonight!!.endTimeMillis = currentTime
+        if (tonight != null) {
+            sleepDao.update(tonight)
+        }
+        val testRes = sleepDao.get(tonight.nightId)
+        assertEquals(testRes!!.endTimeMillis, currentTime)
+        assertEquals(testRes!!.sleepQuality, 5)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun getAllAndDeleteAll() {
+        sleepDao.insert(SleepNight(sleepQuality = 2))
+        sleepDao.insert(SleepNight(sleepQuality = 3))
+        val data=sleepDao.getAllNights()
+        assert(data.value?.size == 2)
+        assert(data.value?.get(0)?.sleepQuality == 3)
+        assert(data.value?.get(1)?.sleepQuality == 2)
+        sleepDao.clear()
+        val delRes=sleepDao.getAllNights()
+        assert(data.value?.size == 0)
     }
 }

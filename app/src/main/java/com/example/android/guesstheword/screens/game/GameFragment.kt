@@ -57,6 +57,9 @@ class GameFragment : Fragment() {
             eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
                 if (hasFinished) gameFinished()
             })
+            hintString.observe(viewLifecycleOwner, Observer<String> { hint ->
+                binding.hintText.text = hint
+            })
         }
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

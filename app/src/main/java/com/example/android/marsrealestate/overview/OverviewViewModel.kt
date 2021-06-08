@@ -20,6 +20,14 @@ package com.example.android.marsrealestate.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.android.marsrealestate.Event
+import com.example.android.marsrealestate.network.MarsApi
+import com.example.android.marsrealestate.network.MarsApiFilter
+import com.example.android.marsrealestate.network.MarsProperty
+import kotlinx.coroutines.launch
+
+enum class MarsApiStatus { LOADING, ERROR, DONE }
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -33,17 +41,63 @@ class OverviewViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private val _properties = MutableLiveData<List<MarsProperty>>()
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
+
+    private val _status = MutableLiveData<MarsApiStatus>()
+    val status: LiveData<MarsApiStatus>
+        get() = _status
+
+    private val _navigateToSelectedProperty = MutableLiveData<Event<MarsProperty>>()
+    val navigateToSelectedProperty: LiveData<Event<MarsProperty>>
+        get() = _navigateToSelectedProperty
+
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
     init {
-        getMarsRealEstateProperties()
+        getMarsRealEstateProperties(MarsApiFilter.SHOW_ALL)
     }
 
     /**
-     * Sets the value of the status LiveData to the Mars API status.
+     * enqueue(Callback) is for Callback method
+     * No more needed when using Coroutine
      */
-    private fun getMarsRealEstateProperties() {
+    private fun getMarsRealEstateProperties(filter: MarsApiFilter) {
         _response.value = "Set the Mars API Response here!"
+        /*
+        MarsApi.retrofitService.getProperties().enqueue(object : Callback<List<MarsProperty>> {
+            override fun onResponse(
+                call: Call<List<MarsProperty>>,
+                response: Response<List<MarsProperty>>
+            ) {
+                _response.value = "Sucess: Received ${response.body().size} Mars properties retieved"
+            }
+
+            override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
+                _response.value = "Failed: ${t.message}"
+            }
+
+        })
+         */
+        viewModelScope.launch {
+            _status.value = MarsApiStatus.LOADING
+            try {
+                _properties.value = MarsApi.retrofitService.getProperties(filter.value)
+                _status.value = MarsApiStatus.DONE
+            } catch (e: Exception) {
+                _status.value = MarsApiStatus.ERROR
+                _properties.value = ArrayList()
+            }
+        }
+    }
+
+    fun updateFilter(filter: MarsApiFilter) {
+        getMarsRealEstateProperties(filter)
+    }
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = Event(marsProperty)
     }
 }

@@ -61,10 +61,11 @@ class OverviewFragment : Fragment() {
         })
 
         viewModel.navigateToSelectedProperty.observe(
-            viewLifecycleOwner,
-            EventObserver<MarsProperty> {
+            this,
+            EventObserver<MarsProperty>({
                 findNavController().navigate(OverviewFragmentDirections.actionShowDetail(it))
             })
+        )
 
         setHasOptionsMenu(true)
         return binding.root

@@ -24,9 +24,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import com.example.android.guesstheword.EventObserver
 import com.example.android.guesstheword.R
 import com.example.android.guesstheword.databinding.GameFragmentBinding
 
@@ -54,12 +54,9 @@ class GameFragment : Fragment() {
         Log.i(TAG, "Called ViewModelProvider.get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         with(viewModel) {
-            eventGameFinish.observe(viewLifecycleOwner, Observer {
-                it.getContentIfNotHandled()?.let {
-                    gameFinished()
-                }
-            }
-            )
+            eventGameFinish.observe(viewLifecycleOwner, EventObserver<Boolean> {
+                gameFinished()
+            })
         }
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

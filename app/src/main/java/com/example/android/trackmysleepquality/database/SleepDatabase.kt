@@ -15,3 +15,35 @@
  */
 
 package com.example.android.trackmysleepquality.database
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+
+@Database(entities = [SleepNight::class], version = 1, exportSchema = false)
+abstract class SleepDatabase : RoomDatabase() {
+    abstract val sleepDatabaseDao: SleepDatabaseDao
+
+    companion object {
+        @Volatile //never cache this value (ie always up to date in all threads)
+        //No situation that, two thread update same old entity in database
+        private var INSTANCE: SleepDatabase? = null
+
+        fun getInstance(context: Context): SleepDatabase {
+            synchronized(this) { //only one thread can enter this block
+                //remember Semaphore + mutex lock?
+                var instance = INSTANCE
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        context,
+                        SleepDatabase::class.java,
+                        "sleep_history_database"
+                    ).fallbackToDestructiveMigration().build()
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
+    }
+}

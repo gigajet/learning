@@ -17,4 +17,23 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import com.example.android.marsrealestate.network.MarsProperty
 
+class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.ViewHolder>(DiffCallback) {
+    class ViewHolder {
+
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
+        override fun areItemsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem === newItem
+        }
+
+        override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+}

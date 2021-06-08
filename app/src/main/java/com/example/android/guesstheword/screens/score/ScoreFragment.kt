@@ -52,14 +52,9 @@ class ScoreFragment : Fragment() {
             ScoreViewModelFactory(ScoreFragmentArgs.fromBundle(requireArguments()).score)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ScoreViewModel::class.java)
         with(viewModel) {
-            eventPlayAgain.observe(viewLifecycleOwner, Observer { playAgain ->
-                if (playAgain) {
+            eventPlayAgain.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let {
                     findNavController().navigate(ScoreFragmentDirections.actionRestart())
-                    viewModel.onPlayAgainComplete()
-                    // Em tưởng navigate là nó đi luôn
-                    // Giống như đoạn code nằm sau startActivity(intent)
-                    // đâu thể nào được chạy.
-                    // TODO tìm thêm chỗ này, coi bên dưới navigate là gì
                 }
             })
         }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.guesstheword.Event
 
 const val TAG = "GameViewModel"
 
@@ -19,8 +20,8 @@ class GameViewModel : ViewModel() {
     val score: LiveData<Int>
         get() = _score
 
-    private val _eventGameFinish = MutableLiveData<Boolean>()
-    val eventGameFinish: LiveData<Boolean>
+    private val _eventGameFinish = MutableLiveData<Event<Boolean>>()
+    val eventGameFinish: LiveData<Event<Boolean>>
         get() = _eventGameFinish
 
     // The list of words - the front of the list is the next word to guess
@@ -61,7 +62,6 @@ class GameViewModel : ViewModel() {
         //Log.i(TAG, "GameViewModel created!")
         _word.value = ""
         _score.value = 0
-        _eventGameFinish.value = false
         resetList()
         nextWord()
     }
@@ -89,11 +89,7 @@ class GameViewModel : ViewModel() {
     }
 
     fun onGameFinish() {
-        _eventGameFinish.value = true
-    }
-
-    fun onGameFinishComplete() {
-        _eventGameFinish.value = false
+        _eventGameFinish.value = Event(true)
     }
 
 

@@ -54,9 +54,12 @@ class GameFragment : Fragment() {
         Log.i(TAG, "Called ViewModelProvider.get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         with(viewModel) {
-            eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
-                if (hasFinished) gameFinished()
-            })
+            eventGameFinish.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let {
+                    gameFinished()
+                }
+            }
+            )
         }
         binding.gameViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -69,6 +72,5 @@ class GameFragment : Fragment() {
         val action = GameFragmentDirections.actionGameToScore()
         action.score = viewModel.score.value ?: 0
         NavHostFragment.findNavController(this).navigate(action)
-        viewModel.onGameFinishComplete()
     }
 }

@@ -72,7 +72,7 @@ class OverviewViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _properties.value = MarsApi.retrofitService.getProperties()
-                _response.value = "Sucess: ${properties.value?.size} Mars properties retieved"
+                _response.value = "Sucess: ${properties.value?.size} Mars properties retrieved"
             } catch (e: Exception) {
                 _response.value = "Failed: ${e.message}"
             }

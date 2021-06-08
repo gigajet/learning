@@ -43,7 +43,6 @@ import androidx.appcompat.app.AppCompatActivity
  * where the real action is.
  */
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

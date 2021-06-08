@@ -22,7 +22,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="property"
             type="com.example.android.marsrealestate.network.MarsProperty" />
@@ -35,6 +34,6 @@
         android:adjustViewBounds="true"
         android:padding="2dp"
         android:scaleType="centerCrop"
-        app:imageSrc="@{property.imgSrcUrl}"
+        app:imageUrl="@{property.imgSrcUrl}"
         tools:src="@tools:sample/backgrounds/scenic" />
 </layout>

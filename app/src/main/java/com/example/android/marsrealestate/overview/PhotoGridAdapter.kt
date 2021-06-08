@@ -34,9 +34,10 @@ class PhotoGridAdapter :
     ): MarsPropertyViewHolder {
         return MarsPropertyViewHolder(GridViewItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
-    
+
     override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
         val item = getItem(position)
+        holder.bind(item)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
@@ -57,5 +58,4 @@ class PhotoGridAdapter :
             binding.executePendingBindings()
         }
     }
-
 }

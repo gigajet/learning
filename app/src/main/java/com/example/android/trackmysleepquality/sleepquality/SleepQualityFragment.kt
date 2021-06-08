@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.android.trackmysleepquality.EventObserver
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepQualityBinding
@@ -59,14 +60,12 @@ class SleepQualityFragment : Fragment() {
             this,
             SleepQualityViewModelFactory(arguments.sleepNightKey, dataSource)
         ).get(SleepQualityViewModel::class.java)
-        sleepQualityViewModel.navigateToSleepTaker.observe(this, Observer {
-            it.returnContentIfNotHandle()?.let { nav ->
-                if (nav) {
-                    findNavController().navigate(SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
-                }
+        sleepQualityViewModel.navigateToSleepTaker.observe(this, EventObserver<Boolean> { nav ->
+            if (nav) {
+                findNavController().navigate(SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
             }
-
-        })
+        }
+        )
         binding.sleepQualityViewModel = sleepQualityViewModel
         return binding.root
     }

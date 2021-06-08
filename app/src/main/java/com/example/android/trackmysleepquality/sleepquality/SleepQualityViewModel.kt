@@ -20,13 +20,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android.trackmysleepquality.EventWrap
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import kotlinx.coroutines.launch
 
 class SleepQualityViewModel(private val sleepNightKey: Long = 0L, val database: SleepDatabaseDao) :
     ViewModel() {
-    private val _navigateToSleepTaker = MutableLiveData<Boolean>()
-    val navigateToSleepTaker: LiveData<Boolean>
+    private val _navigateToSleepTaker = MutableLiveData<EventWrap<Boolean>>()
+    val navigateToSleepTaker: LiveData<EventWrap<Boolean>>
         get() = _navigateToSleepTaker
 
     fun onSetSleepQuality(quality: Int) {
@@ -35,11 +36,7 @@ class SleepQualityViewModel(private val sleepNightKey: Long = 0L, val database: 
             tonight.sleepQuality = quality
             database.update(tonight)
 
-            _navigateToSleepTaker.value = true
+            _navigateToSleepTaker.value = EventWrap(true)
         }
-    }
-
-    fun doneNavigating() {
-        _navigateToSleepTaker.value = null
     }
 }

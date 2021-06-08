@@ -18,6 +18,7 @@ package com.example.android.trackmysleepquality.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.android.trackmysleepquality.EventWrap
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.formatNights
@@ -35,8 +36,8 @@ class SleepTrackerViewModel(
     val nightString = Transformations.map(nights) { nights ->
         formatNights(nights, application.resources)
     }
-    private val _navigateToSleepQuality = MutableLiveData<SleepNight?>()
-    val navigateToSleepQuality: LiveData<SleepNight?>
+    private val _navigateToSleepQuality = MutableLiveData<EventWrap<SleepNight>>()
+    val navigateToSleepQuality: LiveData<EventWrap<SleepNight>>
         get() = _navigateToSleepQuality
 
     val startButtonVisible = Transformations.map(tonight) {
@@ -51,13 +52,9 @@ class SleepTrackerViewModel(
         it?.isNotEmpty()
     }
 
-    private var _showSnackbarEvent = MutableLiveData<Boolean>()
-    val showSnackbarEvent: LiveData<Boolean>
+    private var _showSnackbarEvent = MutableLiveData<EventWrap<Boolean>>()
+    val showSnackbarEvent: LiveData<EventWrap<Boolean>>
         get() = _showSnackbarEvent
-
-    fun doneShowingSnackbar() {
-        _showSnackbarEvent.value = false
-    }
 
     init {
         initializeTonight()
@@ -92,7 +89,8 @@ class SleepTrackerViewModel(
             val oldNight = tonight.value ?: return@launch
             oldNight.endTimeMilli = System.currentTimeMillis()
             update(oldNight)
-            _navigateToSleepQuality.value = oldNight
+            _navigateToSleepQuality.value = EventWrap(oldNight)
+            //Update này trong onClick của Stop button
         }
     }
 
@@ -103,17 +101,13 @@ class SleepTrackerViewModel(
     fun onClearTracking() {
         viewModelScope.launch {
             clear()
-            _showSnackbarEvent.value = true
+            _showSnackbarEvent.value = EventWrap(true)
         }
     }
 
     private suspend fun clear() {
         database.clear()
         tonight.value = null
-    }
-
-    fun doneNavigating() {
-        _navigateToSleepQuality.value = null
     }
 }
 

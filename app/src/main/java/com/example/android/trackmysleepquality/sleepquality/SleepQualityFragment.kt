@@ -59,11 +59,13 @@ class SleepQualityFragment : Fragment() {
             this,
             SleepQualityViewModelFactory(arguments.sleepNightKey, dataSource)
         ).get(SleepQualityViewModel::class.java)
-        sleepQualityViewModel.navigateToSleepTaker.observe(this, Observer { nav ->
-            if (nav != null && nav) {
-                findNavController().navigate(SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
-                sleepQualityViewModel.doneNavigating()
+        sleepQualityViewModel.navigateToSleepTaker.observe(this, Observer {
+            it.returnContentIfNotHandle()?.let { nav ->
+                if (nav) {
+                    findNavController().navigate(SleepQualityFragmentDirections.actionSleepQualityFragmentToSleepTrackerFragment())
+                }
             }
+
         })
         binding.sleepQualityViewModel = sleepQualityViewModel
         return binding.root

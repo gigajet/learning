@@ -20,18 +20,15 @@ package com.example.android.gdgfinder.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.android.gdgfinder.Event
 
 class HomeViewModel : ViewModel() {
 
-    private val _navigateToSearch = MutableLiveData<Boolean>()
-    val navigateToSearch: LiveData<Boolean>
+    private val _navigateToSearch = MutableLiveData<Event<Boolean>>()
+    val navigateToSearch: LiveData<Event<Boolean>>
         get() = _navigateToSearch
 
     fun onFabClicked() {
-        _navigateToSearch.value = true
-    }
-
-    fun onNavigatedToSearch() {
-        _navigateToSearch.value = false
+        _navigateToSearch.value = Event(true)
     }
 }

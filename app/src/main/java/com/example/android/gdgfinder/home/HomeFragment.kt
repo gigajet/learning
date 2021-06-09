@@ -23,6 +23,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.android.gdgfinder.EventObserver
+import com.example.android.gdgfinder.R
 import com.example.android.gdgfinder.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
@@ -39,7 +42,10 @@ class HomeFragment : Fragment() {
     ): View? {
         val binding = HomeFragmentBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
+        viewModel.navigateToSearch.observe(viewLifecycleOwner, EventObserver<Boolean> {
+            findNavController().navigate(R.id.action_homeFragment_to_gdgListFragment)
+        })
+        binding.viewModel = viewModel
         return binding.root
     }
 }
